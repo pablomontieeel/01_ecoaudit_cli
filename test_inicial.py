@@ -1,7 +1,12 @@
-pareja_auditora = input("Introduce ambos nombres: ").strip()
-consumo_str = input("Introduce el consumo en Wh: ").strip()
+pareja_autora = input("Introduce el nombre de la pareja: ").strip()
+nombre_dispositivo = input("Introduce el nombre del dispositivo: ").strip()
+potencia_str = input("Introduce la potencia en Wh: ").strip()
 
-consumo_wh = float(consumo_str)
+potencia_wh = float(potencia_str)
 
-print(f"--- INFORME PARA: {pareja_auditora.upper()} ---")
-print(f"El consumo registrado es de {consumo_wh} Wh.")
+consumo = potencia_wh * 24
+
+print(f"--- INFORME PARA: {pareja_autora.upper()} ---")
+print(f"Dispositivo: {nombre_dispositivo}")
+print(f"Potencia: {potencia_wh} Wh")
+print(f"Consumo diario: {consumo} Wh")
