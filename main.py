@@ -18,10 +18,10 @@ while True:
         print("\n[OPCIÓN 1] Iniciando proceso de auditoría...")
 
         print("Introduzca el número de iteraciones para la auditoría:")
-        iteraciones = input("Número de iteraciones: ").strip()
+        iteraciones_str = input("Número de iteraciones: ").strip()
         
         try:
-            iteraciones = int(iteraciones)
+            iteraciones = int(iteraciones_str)
         except ValueError:
             print("⚠️ Error: Debe introducir un número entero.")
             continue   
