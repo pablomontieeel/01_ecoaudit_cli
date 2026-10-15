@@ -22,15 +22,21 @@ while True:
         potencia = float(input("Potencia consumida en Vatios (W): "))
         horas = float(input("Horas de uso diario: "))
         iteraciones_str = input("Número de iteraciones: ").strip()
-        
-        try:
-            iteraciones = int(iteraciones_str)
-        except ValueError:
-            print("⚠️ Error: Debe introducir un número entero.")
-            continue   
-        if iteraciones <= 0:
+        if horas <0 and int(iteraciones_str) <= 0:
+            print("⚠️ Error: Las horas de uso y el número de iteraciones deben ser mayores que 0.")
+        elif horas <0 or  horas >= 24:
+            print("⚠️ Error: Las horas de uso deben ser mayores que 0 y menores o iguales que 24.")
+        elif int(iteraciones_str) <= 0:
             print("⚠️ Error: El número de iteraciones debe ser mayor que 0.")
+        
         else:
+            print("Las horas de uso y el número de iteraciones son válidas. Continuando con la auditoría...")
+            try:
+                iteraciones = int(iteraciones_str)
+            except ValueError:
+                print("⚠️ Error: Debe introducir un número entero.")
+                continue   
+    
             print("El número de iteraciones es válido. Continuando con la auditoría...")
             consumo = estimar_consumo_wh(potencia, horas, iteraciones)    
             huella_co2 = calcular_huella_co2(consumo)
