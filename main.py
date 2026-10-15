@@ -1,3 +1,5 @@
+from calculadora import estimar_consumo_wh, calcular_huella_co2
+
 while True:
     print("\n=========================================")
     print(" 🌿 ECOAUDIT CLI - MENÚ PRINCIPAL 🌿 ")
@@ -15,9 +17,10 @@ while True:
         continue
     
     if opcion == 1:
-        print("\n[OPCIÓN 1] Iniciando proceso de auditoría...")
-
-        print("Introduzca el número de iteraciones para la auditoría:")
+        print("\n--- AUDITORÍA ENERGÉTICA ---")
+        equipo_auditor = input("Nombre del equipo auditor: ").strip()
+        potencia = float(input("Potencia consumida en Vatios (W): "))
+        horas = float(input("Horas de uso diario: "))
         iteraciones_str = input("Número de iteraciones: ").strip()
         
         try:
@@ -29,7 +32,12 @@ while True:
             print("⚠️ Error: El número de iteraciones debe ser mayor que 0.")
         else:
             print("El número de iteraciones es válido. Continuando con la auditoría...")
-                
+            consumo = estimar_consumo_wh(potencia, horas, iteraciones)    
+            huella_co2 = calcular_huella_co2(consumo)
+
+            print(f"\n✅ Resultados calculados para '{equipo_auditor}':")
+            print(f"   • Consumo total: {consumo:.2f} Wh")
+            print(f"   • Huella de carbono estimada: {huella_co2:.4f} kg CO2")
     
     elif opcion == 2:
         print("\n[OPCIÓN 2] Consultando registros históricos...")
