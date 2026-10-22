@@ -44,9 +44,20 @@ while True:
             print(f"\n✅ Resultados calculados para '{equipo_auditor}':")
             print(f"   • Consumo total: {consumo:.2f} Wh")
             print(f"   • Huella de carbono estimada: {huella_co2:.4f} kg CO2")
+
+        with open("auditorias.csv", mode="a", encoding="utf-8") as archivo:
+            archivo.write(f"{equipo_auditor},{potencia},{horas},{iteraciones},{consumo:.2f},{huella_co2:.4f}\n")
+            print("Registro guardado con éxito en 'auditorias.csv'.")
     
     elif opcion == 2:
         print("\n[OPCIÓN 2] Consultando registros históricos...")
+        try:
+            with open ("auditorias.csv", mode="r", encoding="utf-8") as archivo:
+                contenido = archivo.read()
+                print(contenido)
+
+        except FileNotFoundError:
+            print("⚠️ No se encontró el archivo 'auditorias.csv'. Aún no se han registrado auditorías.")
     
     elif opcion == 3:
         print("\nSaliendo de EcoAudit CLI. ¡Hasta pronto!")
