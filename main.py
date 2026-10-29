@@ -42,7 +42,6 @@ while True:
             huella_co2 = calcular_huella_co2(consumo)
 
             print("\nIniciando simulación ciclo a ciclo...")
-            ### Simulación ciclo a ciclo
             consumo_ciclo = estimar_consumo_wh(potencia, horas, 1)
             consumo_acumulado = 0.0
             ciclo = 1
