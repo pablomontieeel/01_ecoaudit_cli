@@ -1,4 +1,4 @@
-from calculadora import estimar_consumo_wh, calcular_huella_co2
+from calculadora import estimar_consumo_wh, calcular_huella_co2, auditar_lote_servidores
 
 while True:
     print("\n=========================================")
@@ -22,15 +22,20 @@ while True:
         potencia = float(input("Potencia consumida en Vatios (W): "))
         horas = float(input("Horas de uso diario: "))
         iteraciones_str = input("Número de iteraciones: ").strip()
-        if horas <0 and int(iteraciones_str) <= 0:
-            print("⚠️ Error: Las horas de uso y el número de iteraciones deben ser mayores que 0.")
+        num_equipos = int(input("Número de equipos a auditar: "))
+    
+        if horas <0 and int(iteraciones_str) <= 0 and int(num_equipos) <= 0:
+            print("⚠️ Error: Las horas de uso, el número de iteraciones y el número de equipos deben ser mayores que 0.")
         elif horas <0 or  horas >= 24:
             print("⚠️ Error: Las horas de uso deben ser mayores que 0 y menores o iguales que 24.")
         elif int(iteraciones_str) <= 0:
             print("⚠️ Error: El número de iteraciones debe ser mayor que 0.")
-        
+        elif int(num_equipos) <= 0:
+            print("⚠️ Error: El número de equipos debe ser mayor que 0.")
+
         else:
             print("Las horas de uso y el número de iteraciones son válidas. Continuando con la auditoría...")
+            
             try:
                 iteraciones = int(iteraciones_str)
             except ValueError:
@@ -38,7 +43,12 @@ while True:
                 continue   
     
             print("El número de iteraciones es válido. Continuando con la auditoría...")
-            consumo = estimar_consumo_wh(potencia, horas, iteraciones)    
+
+            print("\n --- AUDITORÍA DEL LOTE DE SERVIDORES ---")
+
+            huella_total = auditar_lote_servidores(iteraciones, potencia, horas)
+            print(f"\nHuella total del lote: {huella_total:.4f} kg CO2")
+            consumo = estimar_consumo_wh(potencia, horas, iteraciones)
             huella_co2 = calcular_huella_co2(consumo)
 
             print("\nIniciando simulación ciclo a ciclo...")
@@ -51,12 +61,14 @@ while True:
                 print(f" [Ciclo {ciclo}] Consumo acumulado parcial: {consumo_acumulado:.2f} Wh")
                 ciclo = ciclo + 1
 
+            
+
             print(f"\n✅ Resultados calculados para '{equipo_auditor}':")
             print(f"   • Consumo total: {consumo:.2f} Wh")
             print(f"   • Huella de carbono estimada: {huella_co2:.4f} kg CO2")
-
+            print(f"   • Número de equipos auditados: {num_equipos}")
         with open("auditorias.csv", mode="a", encoding="utf-8") as archivo:
-            archivo.write(f"{equipo_auditor},{potencia},{horas},{iteraciones},{consumo:.2f},{huella_co2:.4f}\n")
+            archivo.write(f"{equipo_auditor},{potencia},{horas},{iteraciones},{consumo:.2f},{huella_co2:.4f},{num_equipos}\n")
             print("Registro guardado con éxito en 'auditorias.csv'.")
     
     elif opcion == 2:
